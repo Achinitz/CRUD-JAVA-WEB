@@ -5,6 +5,20 @@ import java.sql.Date;
 
 public class ClienteBean implements Serializable {
 
+    /**
+     * @return the cidade
+     */
+    public CidadeBean getCidade() {
+        return cidade;
+    }
+
+    /**
+     * @param cidade the cidade to set
+     */
+    public void setCidade(CidadeBean cidade) {
+        this.cidade = cidade;
+    }
+
     private int id_cliente;
     private String cpf_cliente;
     private String nome_cliente;
@@ -14,6 +28,7 @@ public class ClienteBean implements Serializable {
     private int nr_cliente;
     private String cep_cliente;
     private int cidade_cliente;
+    private CidadeBean cidade;
     
     public ClienteBean(){ 
         

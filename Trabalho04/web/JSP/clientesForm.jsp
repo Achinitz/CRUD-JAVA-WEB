@@ -95,24 +95,19 @@
                 </div>
                 <div class="form-group">
                    <label>Estado</label>
-                   <select name="cidade" id="inputEstado" class="form-control">
+                   <select name="estado" id="inputEstado" class="form-control">
                      <option selected="true">${(empty cliente) ? "Selecione..." : ""}</option>
-                       <c:forEach var="cidade" items="${listaCidade}">
-                           <option value="${cidade.id_cidade}">
-                               <c:out value="${cidade.nome_cidade}" />
+                       <c:forEach var="estado" items="${listaEstado}">
+                           <option value="${estado.id_estado}">
+                               <c:out value="${estado.nome_estado}" />
                            </option>
                        </c:forEach>    
                    </select>
                 </div>
                 <div class="form-group">
                     <label>Cidade</label>
-                    <select name="cidade" id="inputCidade" class="form-control" readonly="">
-                      <option selected="true">${(empty cliente) ? "Selecione..." : ""}</option>
-                        <c:forEach var="cidade" items="${listaCidade}">
-                            <option value="${cidade.id_cidade}">
-                                <c:out value="${cidade.nome_cidade}" />
-                            </option>
-                        </c:forEach>    
+                    <select name="cidade" id="inputCidade" class="form-control">
+                      <option selected="true">${(empty cliente) ? "Selecione..." : ""}</option>  
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">
@@ -125,10 +120,38 @@
         </div>
                 
     <%-- JAVA SCRIPT --%>
-    <script language="Javascript" src="jquery-1.7.1.min.js">
-        $('#inputEstado').change(function(){
-            $("#inputEstado").attr('disabled', 'disabled');
-        });         
+    <script language="Javascript">
+
+        if(!($("#inputEstado").is(":selected"))){
+            $("#inputCidade").prop('disabled', true);
+        }else{
+            getCidades();
+        }
+                        
+        function getCidades(){
+        $("#inputCidade").prop('disabled', false);
+        var estadoId = $("#inputEstado").val();
+        var url = "${pageContext.request.contextPath}/AjaxServlet?action=carregarCidade&estadoId=${estadoId}";
+        $.ajax({
+            url : url, // URL da sua Servlet
+            data : {
+                estadoId : estadoId
+            }, // Parâmetro passado para a Servlet
+            dataType : 'json',
+            success : function(data) {
+                // Se sucesso, limpa e preenche a combo de cidade
+                // alert(JSON.stringify(data));
+                $("#inputCidade").empty();
+                $.each(data, function(i, obj) {
+                    $("#inputCidade").append('<option value=' + obj.id + '>' + obj.nome + '</option>');
+                });
+            },
+            error : function(request, textStatus, errorThrown) {
+                alert(request.status + ', Error: ' + request.statusText);
+                 // Erro
+            }
+        });
+        }
     </script>
     <%-- END JAVA SCRIPT --%>
                 

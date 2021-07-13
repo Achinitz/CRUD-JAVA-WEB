@@ -87,6 +87,7 @@ public class ClientesServlet extends HttpServlet {
                     //Retorna uma lista com todos os clientes que tem no banco de dados
                     rd = request.getRequestDispatcher("/JSP/clientesListar.jsp");
                     request.setAttribute("Clientes", listaClientes);
+                    request.setAttribute("Estados", facadeEstado.buscarTodos());
                     rd.forward(request, response);
                 break;                
                 case "formUpdate":
@@ -128,8 +129,8 @@ public class ClientesServlet extends HttpServlet {
                 case "formNew": 
                     //Retorna uma lista com todos os clientes que tem no banco de dados
                     rd = request.getRequestDispatcher("/JSP/clientesForm.jsp");
-                    request.setAttribute("Clientes", facadeEstado.buscarTodos());
                     request.setAttribute("listaCidade", facadeCidade.buscarTodos());
+                    request.setAttribute("listaEstado", facadeEstado.buscarTodos());
                     rd.forward(request, response);
                     break;
                 case "new": 

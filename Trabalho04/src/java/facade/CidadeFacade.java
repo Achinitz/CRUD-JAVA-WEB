@@ -13,4 +13,8 @@ public class CidadeFacade{
         return dao.listarCidades();
     }
     
+    public List<CidadeBean> buscarCidadesPorIdEstado(int idEstado) {
+        return dao.buscarCidadesPorEstado(idEstado);
+    }
+    
 }
